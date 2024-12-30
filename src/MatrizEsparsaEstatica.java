@@ -129,4 +129,17 @@ public class MatrizEsparsaEstatica {
         return true;
     }
 
+    /* 11 - Verificar se é uma matriz triangular superior (só tem elementos da diagonal
+    principal para cima)*/
+    public boolean isTriangularSuperior() {
+        for (int i = 0; i < linhas; i++) {
+            for (int j = 0; j < i; j++) {
+                if (matriz[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
