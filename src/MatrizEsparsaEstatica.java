@@ -142,4 +142,66 @@ public class MatrizEsparsaEstatica {
         return true;
     }
 
+    /*12. Verificar se a matriz é simétrica; (A[i,j] = A[j,i] para todo i, j);*/
+    public boolean isSimetrica(){
+        for (int i = 0; i < linhas; i++){
+            for (int j = i + 1; j < colunas; j++){
+                if (matriz[i][j] != matriz[j][i]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /*13. Somar duas matrizes esparsas;*/
+    public MatrizEsparsaEstatica somarMatrizes(MatrizEsparsaEstatica matriz2) {
+
+        //matriz resultante
+        MatrizEsparsaEstatica matrizResultante = new MatrizEsparsaEstatica(this.linhas, this.colunas);
+
+        for (int i = 0; i < this.linhas; i++) {
+            for (int j = 0; j < this.colunas; j++) {
+                int valorSoma = this.matriz[i][j] + matriz2.matriz[i][j];
+                matrizResultante.insertElement(i, j, valorSoma);
+            }
+        }
+
+        return matrizResultante;
+    }
+
+    /*14. Multiplicar duas matrizes esparsas;*/
+    public MatrizEsparsaEstatica multiplicaMatrizes(MatrizEsparsaEstatica matriz2){
+        // Cria a matriz resultante
+        MatrizEsparsaEstatica matrizResultante = new MatrizEsparsaEstatica(this.linhas, matriz2.colunas);
+
+        // Realiza a multiplicação
+        for (int i = 0; i < this.linhas; i++) {
+            for (int j = 0; j < matriz2.colunas; j++) {
+                int valorProduto = 0;
+                for (int k = 0; k < this.colunas; k++) {
+                    valorProduto += this.matriz[i][k] * matriz2.matriz[k][j];
+                }
+                if (valorProduto != 0) { // Apenas insere elementos diferentes de zero
+                    matrizResultante.insertElement(i, j, valorProduto);
+                }
+            }
+        }
+
+        return matrizResultante;
+    }
+
+    /*15. Obter a matriz transposta*/
+    public MatrizEsparsaEstatica obterTransposta() {
+        MatrizEsparsaEstatica matrizTransposta = new MatrizEsparsaEstatica(this.colunas, this.linhas);
+
+        // Preenche a matriz transposta
+        for (int i = 0; i < this.linhas; i++) {
+            for (int j = 0; j < this.colunas; j++) {
+                matrizTransposta.insertElement(j, i, this.matriz[i][j]);
+            }
+        }
+
+        return matrizTransposta;
+    }
 }

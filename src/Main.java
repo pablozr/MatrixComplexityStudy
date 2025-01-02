@@ -19,7 +19,7 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
 
         //Remover um elemento
-        matriz.removeElement(1,2);
+        //matriz.removeElement(1,2);
 
         //Impressão de matriz após remoção do 6
         matriz.printMatriz();
@@ -30,6 +30,15 @@ public class Main {
         matriz.searchElement(4);
 
         //Imprimir uma matriz vazia
-        matriz.printMatrizVazia();
+        //matriz.printMatrizVazia();
+
+        //transposta
+        //matriz.obterTransposta().printMatriz();
+
+        //simetrica
+        System.out.println(matriz.isSimetrica());
+
+        //triangular superior
+        matriz.isTriangularSuperior();
     }
 }
