@@ -19,19 +19,20 @@ public class MatrizEsparsaEstatica {
         matriz[linha][coluna] = 0;
     }
 
-    //3 - Busca por um elemento específico (pode ser feito como booleano e retornando true/false)
-    public boolean searchElement(int elem) {
-        for (int i = 0; i < linhas; i++) {
-            for (int j = 0; j < colunas; j++) {
-                if (matriz[i][j] == elem){
-                    System.out.println("Elemento " + elem + " encontrado, na posiçã  o [" + i + ", " + j + "]");
-                    return true;
-                }
-            }
+    //3 - Busca por um elemento específico
+    public int searchElement(int i, int j) {
+        int N = 0;
+
+        if(i > linhas || j > colunas)
+            System.out.println("Erro ao buscar elemento");
+
+        for(int I = 0; I < linhas; I++) {
+            for(int J = 0; J < colunas; J++)
+                if(i == I && j == J)
+                    N = matriz[I][J];
         }
 
-        System.out.println("Elemento não encontrado");
-        return false;
+        return N;
     }
 
     //4 - Impressão da matriz
