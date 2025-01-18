@@ -110,4 +110,81 @@ public class MatrizEsparsaLinkedList {
     public void printEmptyMatriz(){
         System.out.println("null");
     }
+
+    //11 - Verificar se é uma matriz triangular superior (só tem elementos da diagonal principal para cima);
+    public boolean isTriangularSuperior() {
+        for (int i = 0; i < linhas.length; i++) {
+            Elo atual = linhas[i];
+            while (atual != null) {
+                if (atual.coluna < i) {//se tiver algum que coluna < i, o elemento tá abaixo da diagonal principal
+                    return false;
+                }
+                atual = atual.prox;
+            }
+        }
+        return true; // Todos os elementos abaixo da diagonal principal são zeros
+    }
+
+    //12 - Verificar se a matriz é simétrica; (A[i,j] = A[j,i] para todo i, j)
+    public boolean isSimetrica() {
+        for (int i = 0; i < linhas.length; i++) {
+            Elo atual = linhas[i];
+            while (atual != null) {
+                int j = atual.coluna;
+                int valor = atual.valor;
+
+                //Verifica se existe o elemento simétrico (j, i) e se o valor é igual
+                if (!temValorNaPosicao(j, i, valor)) {
+                    return false;
+                }
+
+                atual = atual.prox;
+            }
+        }
+        return true;
+    }
+
+    //Método auxiliar para verificar se naquela linha e coluna tem o valor
+    private boolean temValorNaPosicao(int linha, int coluna, int valor) {
+        if (linha >= linhas.length) {
+            return false;
+        }
+        Elo atual = linhas[linha];
+        while (atual != null) {
+            if (atual.coluna == coluna && atual.valor == valor) {
+                return true;
+            }
+            atual = atual.prox;
+        }
+        return false;
+    }
+
+    //13 - Somar duas matrizes esparsas;
+    public MatrizEsparsaLinkedList soma(MatrizEsparsaLinkedList outra) {
+        int numLinhas = this.linhas.length;
+        MatrizEsparsaLinkedList resultado = new MatrizEsparsaLinkedList(numLinhas);
+
+        for (int i = 0; i < numLinhas; i++) {
+            Elo atualA = this.linhas[i];
+            Elo atualB = outra.linhas[i];
+
+            while (atualA != null || atualB != null) {
+                if (atualA != null && (atualB == null || atualA.coluna < atualB.coluna)) {
+                    resultado.insertElement(i, atualA.coluna, atualA.valor);
+                    atualA = atualA.prox;
+                } else if (atualB != null && (atualA == null || atualB.coluna < atualA.coluna)) {
+                    resultado.insertElement(i, atualB.coluna, atualB.valor);
+                    atualB = atualB.prox;
+                } else {//mesma coluna
+                    int somaValor = atualA.valor + atualB.valor;
+                    if (somaValor != 0) {
+                        resultado.insertElement(i, atualA.coluna, somaValor);
+                    }
+                    atualA = atualA.prox;
+                    atualB = atualB.prox;
+                }
+            }
+        }
+        return resultado;
+    }
 }
