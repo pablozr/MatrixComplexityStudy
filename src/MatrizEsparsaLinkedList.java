@@ -143,7 +143,6 @@ public class MatrizEsparsaLinkedList {
         }
         return true;
     }
-
     //Método auxiliar para verificar se naquela linha e coluna tem o valor
     private boolean temValorNaPosicao(int linha, int coluna, int valor) {
         if (linha >= linhas.length) {
@@ -187,4 +186,47 @@ public class MatrizEsparsaLinkedList {
         }
         return resultado;
     }
+
+    //14 - Multiplicar duas matrizes esparsas
+    public MatrizEsparsaLinkedList multiplica(MatrizEsparsaLinkedList outra) {
+        int numLinhas = this.linhas.length;
+        int numColunas = outra.linhas.length;
+        MatrizEsparsaLinkedList resultado = new MatrizEsparsaLinkedList(numLinhas);
+
+        for (int i = 0; i < numLinhas; i++) {
+            Elo linhaAtual = this.linhas[i];
+            while (linhaAtual != null) {
+                int colunaAtual = linhaAtual.coluna;
+                Elo colunaOutra = outra.linhas[colunaAtual];
+                while (colunaOutra != null) {
+                    int colunaResultado = colunaOutra.coluna;
+                    int valorMultiplicado = linhaAtual.valor * colunaOutra.valor;
+
+                    int valorExistente = resultado.searchElement(i, colunaResultado);
+                    resultado.insertElement(i, colunaResultado, valorExistente + valorMultiplicado);
+
+                    colunaOutra = colunaOutra.prox;
+                }
+                linhaAtual = linhaAtual.prox;
+            }
+        }
+        return resultado;
+    }
+
+    //15 - Obter a matriz transposta
+    public MatrizEsparsaLinkedList transposta() {
+        int numLinhas = linhas.length;
+        MatrizEsparsaLinkedList transposta = new MatrizEsparsaLinkedList(numLinhas);
+
+        for (int i = 0; i < numLinhas; i++) {
+            Elo atual = linhas[i];
+            while (atual != null) {
+                // Inverte a linha e a coluna ao inserir na matriz transposta
+                transposta.insertElement(atual.coluna, i, atual.valor);
+                atual = atual.prox;
+            }
+        }
+        return transposta;
+    }
+
 }
