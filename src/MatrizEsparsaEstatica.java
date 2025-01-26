@@ -1,12 +1,50 @@
-public class MatrizEsparsaEstatica {
+import java.util.Random;
+
+public class MatrizEsparsaEstatica implements GeradorMatriz{
     private int linhas;
     private int colunas;
     private int[][] matriz;
+    private static final double esparsidade = 0.6;
 
     public MatrizEsparsaEstatica(int linhas, int colunas) {
         this.linhas = linhas;
         this.colunas = colunas;
         this.matriz = new int[linhas][colunas];
+    }
+
+    @Override
+    public void gerarMatriz(int tamanho){
+        final int TAMANHO_BLOCO = 100;
+
+        for (int i = 0; i < linhas; i++) {
+            for (int j = 0; j < colunas; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+
+        int elementosNaoNulos = (int) (linhas * colunas * (1 - esparsidade));
+        Random random = new Random();
+
+        for (int blocoLinha = 0; blocoLinha < linhas; blocoLinha += TAMANHO_BLOCO) {
+            for (int blocoColuna = 0; blocoColuna < colunas; blocoColuna += TAMANHO_BLOCO) {
+                int fimLinha = Math.min(blocoLinha + TAMANHO_BLOCO, linhas);
+                int fimColuna = Math.min(blocoColuna + TAMANHO_BLOCO, colunas);
+
+                int areaBloco = (fimLinha - blocoLinha) * (fimColuna - blocoColuna);
+                int elementosNoBloco = (int) Math.round((double) areaBloco / (linhas * colunas) * elementosNaoNulos);
+
+
+                while (elementosNoBloco > 0) {
+                    int i = random.nextInt(fimLinha - blocoLinha) + blocoLinha;
+                    int j = random.nextInt(fimColuna - blocoColuna) + blocoColuna;
+
+                    if (matriz[i][j] == 0) {
+                        matriz[i][j] = random.nextInt(100) + 1;
+                        elementosNoBloco--;
+                    }
+                }
+            }
+        }
     }
 
     //1 - Inserir um elemento
@@ -173,18 +211,16 @@ public class MatrizEsparsaEstatica {
 
     /*14. Multiplicar duas matrizes esparsas;*/
     public MatrizEsparsaEstatica multiplicaMatrizes(MatrizEsparsaEstatica matriz2){
-        // Cria a matriz resultante
         MatrizEsparsaEstatica matrizResultante = new MatrizEsparsaEstatica(this.linhas, matriz2.colunas);
 
-        // Realiza a multiplicação
         for (int i = 0; i < this.linhas; i++) {
-            for (int j = 0; j < matriz2.colunas; j++) {
-                int valorProduto = 0;
-                for (int k = 0; k < this.colunas; k++) {
-                    valorProduto += this.matriz[i][k] * matriz2.matriz[k][j];
-                }
-                if (valorProduto != 0) { // Apenas insere elementos diferentes de zero
-                    matrizResultante.insertElement(i, j, valorProduto);
+            for (int k = 0; k < this.colunas; k++) {
+                if (this.matriz[i][k] != 0) {
+                    for (int j = 0; j < matriz2.colunas; j++) {
+                        if (matriz2.matriz[k][j] != 0) {
+                            matrizResultante.matriz[i][j] += this.matriz[i][k] * matriz2.matriz[k][j];
+                        }
+                    }
                 }
             }
         }
@@ -196,7 +232,6 @@ public class MatrizEsparsaEstatica {
     public MatrizEsparsaEstatica obterTransposta() {
         MatrizEsparsaEstatica matrizTransposta = new MatrizEsparsaEstatica(this.colunas, this.linhas);
 
-        // Preenche a matriz transposta
         for (int i = 0; i < this.linhas; i++) {
             for (int j = 0; j < this.colunas; j++) {
                 matrizTransposta.insertElement(j, i, this.matriz[i][j]);
