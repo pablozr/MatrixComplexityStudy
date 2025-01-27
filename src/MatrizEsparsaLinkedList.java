@@ -142,9 +142,7 @@ public class MatrizEsparsaLinkedList implements GeradorMatriz {
     }
 
     //5 - Representar uma matriz vazia
-    public void printEmptyMatriz(){
-        System.out.println("null");
-    }
+    public void EmptyMatriz(){linhas = null;}
 
     //6
     public boolean isVazia() {
