@@ -5,10 +5,10 @@ import java.nio.charset.StandardCharsets;
 public class Main {
     public static void main(String[] args) {
 
-        int[] tamanhos = {10, 20, 30, 40, 50, 100, 200, 500, 1000, 10000};
+        int[] tamanhos = {10, 20, 30, 40, 50, 100, 200, 500, 1000};
 
         try (FileWriter writer = new FileWriter("desempenho_matrizes.csv", StandardCharsets.UTF_8)) {
-            writer.write("Tamanho,Metodo,Classe,TempoMedio\n");
+            writer.write("Tamanho;Metodo;Classe;TempoMedio\n");
 
             for (int tamanho : tamanhos) {
                 System.out.println("Testando matrizes de tamanho: " + tamanho);
@@ -16,6 +16,7 @@ public class Main {
                 MatrizEsparsaEstatica estatica = new MatrizEsparsaEstatica(tamanho, tamanho);
                 estatica.gerarMatriz(tamanho);
                 MatrizEsparsaLinkedList encadeada = new MatrizEsparsaLinkedList(tamanho);
+                encadeada.gerarMatriz(tamanho);
 
                 String[] metodos = {"multiplicaMatrizes", "obterTransposta", "somarMatrizes"};
 

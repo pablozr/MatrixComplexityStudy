@@ -117,15 +117,14 @@ public class MatrizEsparsaLinkedList implements GeradorMatriz {
 
         Elo p = linhas[linha];
         if (p == null)
-            throw new IllegalArgumentException("A linha especificada está vazia.");
+            return 0;
 
-        int cont = 0;
-        for (Elo x = p; x != null; x = x.prox, cont++) {
-            if (cont == coluna)
+        for (Elo x = p; x != null; x = x.prox) {
+            if (x.coluna == coluna)
                 return x.valor;
         }
 
-        throw new IllegalArgumentException("Índice da coluna está fora do intervalo válido.");
+        return 0;
     }
 
 
@@ -142,9 +141,7 @@ public class MatrizEsparsaLinkedList implements GeradorMatriz {
     }
 
     //5 - Representar uma matriz vazia
-    public void printEmptyMatriz(){
-        System.out.println("null");
-    }
+    public void EmptyMatriz(){linhas = null;}
 
     //6
     public boolean isVazia() {
@@ -303,26 +300,42 @@ public class MatrizEsparsaLinkedList implements GeradorMatriz {
     //14 - Multiplicar duas matrizes esparsas
     public MatrizEsparsaLinkedList multiplicaMatrizes(MatrizEsparsaLinkedList outra) {
         int numLinhas = this.linhas.length;
-        int numColunas = outra.linhas.length;
+        int numColunas = outra.linhas.length; // Número de colunas da segunda matriz
         MatrizEsparsaLinkedList resultado = new MatrizEsparsaLinkedList(numLinhas);
 
+        // Percorre todas as linhas da primeira matriz
         for (int i = 0; i < numLinhas; i++) {
             Elo linhaAtual = this.linhas[i];
+
+            // Para cada linha da primeira matriz, percorre seus elementos não nulos
             while (linhaAtual != null) {
                 int colunaAtual = linhaAtual.coluna;
+                int valorLinha = linhaAtual.valor;
+
+                // Acessa a linha correspondente da segunda matriz
                 Elo colunaOutra = outra.linhas[colunaAtual];
+
+                // Percorre a linha da segunda matriz
                 while (colunaOutra != null) {
                     int colunaResultado = colunaOutra.coluna;
-                    int valorMultiplicado = linhaAtual.valor * colunaOutra.valor;
+                    int valorColuna = colunaOutra.valor;
 
+                    // Multiplica os elementos não nulos
+                    int valorMultiplicado = valorLinha * valorColuna;
+
+                    // Verifica se já existe um valor na posição (i, colunaResultado) na matriz resultado
                     int valorExistente = resultado.searchElement(i, colunaResultado);
+
+                    // Se a célula já tem um valor, soma; se não, insere o novo valor
                     resultado.insertElement(i, colunaResultado, valorExistente + valorMultiplicado);
 
                     colunaOutra = colunaOutra.prox;
                 }
+
                 linhaAtual = linhaAtual.prox;
             }
         }
+
         return resultado;
     }
 

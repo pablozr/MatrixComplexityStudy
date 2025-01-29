@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class MatrizEsparsaEstatica implements GeradorMatriz{
+public class MatrizEsparsaEstatica implements GeradorMatriz {
     private int linhas;
     private int colunas;
     private int[][] matriz;
@@ -13,7 +13,7 @@ public class MatrizEsparsaEstatica implements GeradorMatriz{
     }
 
     @Override
-    public void gerarMatriz(int tamanho){
+    public void gerarMatriz(int tamanho) {
         final int TAMANHO_BLOCO = 100;
 
         for (int i = 0; i < linhas; i++) {
@@ -61,12 +61,12 @@ public class MatrizEsparsaEstatica implements GeradorMatriz{
     public int searchElement(int i, int j) {
         int N = 0;
 
-        if(i > linhas || j > colunas)
+        if (i > linhas || j > colunas)
             System.out.println("Erro ao buscar elemento");
 
-        for(int I = 0; I < linhas; I++) {
-            for(int J = 0; J < colunas; J++)
-                if(i == I && j == J)
+        for (int I = 0; I < linhas; I++) {
+            for (int J = 0; J < colunas; J++)
+                if (i == I && j == J)
                     N = matriz[I][J];
         }
 
@@ -83,13 +83,15 @@ public class MatrizEsparsaEstatica implements GeradorMatriz{
     }
 
     //5 - Representar uma matriz vazia
-    public void printMatrizVazia (){
-        for (int i = 0; i < linhas; i++) {
-            for (int j = 0; j < colunas; j++) {
-                System.out.printf("[%d][%d]: 0 \n", i, j);
+    public void printMatrizVazia() {
+        for (int i = 0; i < linhas; i++){
+            for (int j = 0; j < colunas; j++){
+                if(matriz[i][j] != 0)  matriz[i][j] = 0;
             }
+
         }
     }
+
 
     //6 - Verificar se é uma matriz vazia
     public boolean isVazia() {
