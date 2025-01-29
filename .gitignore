@@ -1,3 +1,33 @@
+# Ignorar ambiente virtual
+venv/
+*.venv
+
+# Arquivos de IDEs (como PyCharm, VS Code)
+.vscode/
+.idea/
+
+# Arquivos temporários do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Arquivos de log
+*.log
+
+# Arquivos do Jupyter Notebook
+.ipynb_checkpoints/
+
+# Arquivos de configuração do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de cache do pip
+pip-wheel-metadata/
+*.egg-info/
+*.egg
+
+# Arquivos de backup (se houver)
+*~
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
