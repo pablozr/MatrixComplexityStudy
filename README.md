@@ -24,7 +24,7 @@ After implementing the methods, a series of experiments were conducted to measur
 - **Addition**
 - **Transpose**
 
-Each of these methods was executed **10 times** for each matrix size, and the **average execution time** was calculated. The matrix sizes varied from **10x10** up to **10,000 x 10,000** (10k x 10k).
+Each of these methods was executed **10 times** for each matrix size, and the **average execution time** was calculated. The matrix sizes varied from **10x10** up to **1000** x **1000**.
 
 ### Computer Specifications:
 - **Processor**: AMD Ryzen 5 5600G with Radeon Graphics (3.90 GHz)
