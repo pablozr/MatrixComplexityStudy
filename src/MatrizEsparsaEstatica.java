@@ -58,20 +58,7 @@ public class MatrizEsparsaEstatica implements GeradorMatriz{
     }
 
     //3 - Busca por um elemento específico
-    public int searchElement(int i, int j) {
-        int N = 0;
-
-        if(i > linhas || j > colunas)
-            System.out.println("Erro ao buscar elemento");
-
-        for(int I = 0; I < linhas; I++) {
-            for(int J = 0; J < colunas; J++)
-                if(i == I && j == J)
-                    N = matriz[I][J];
-        }
-
-        return N;
-    }
+    public int searchElement(int i, int j) {return matriz[i][j];}
 
     //4 - Impressão da matriz
     public void printMatriz() {
